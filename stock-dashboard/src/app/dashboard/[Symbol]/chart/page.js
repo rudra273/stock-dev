@@ -13,7 +13,7 @@ const getToken = () => {
 const fetchHistoricalStockData = async (symbol, period) => {
   const token = getToken();  // Function to get the token from localStorage
 
-  const lurl = 'http://localhost:8002';
+  const lurl = 'http://192.168.49.2:30001';
   const durl = process.env.NEXT_PUBLIC_API_URL;
 
   try {

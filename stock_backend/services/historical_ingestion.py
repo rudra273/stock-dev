@@ -1,6 +1,7 @@
 import yfinance as yf
 import pandas as pd
 from postgres import dump_to_postgresql
+import os
 
 def fetch_historical_data(symbols, period="1y"):
     historical_data = {}
@@ -9,7 +10,7 @@ def fetch_historical_data(symbols, period="1y"):
             stock = yf.Ticker(symbol)
             hist = stock.history(period=period)
             hist['symbol'] = symbol
-            hist['company_name'] = stock.info.get('shortName', 'N/A')
+            hist['company_name'] = stock.info.get('longName', 'N/A')
             hist['marketCap'] = stock.info.get('marketCap', 'N/A')
             hist['sector'] = stock.info.get('sector', 'N/A')
             hist['industry'] = stock.info.get('industry', 'N/A')
@@ -34,7 +35,18 @@ def fetch_and_store_historical_data():
     symbols = [
         "MSFT", "AAPL", "GOOGL", "AMZN", "TSLA", "META", "NVDA", "ADBE", "INTC", "NFLX",
         "CSCO", "AMD", "BA", "IBM", "DIS", "PYPL", "MA", "V", "WMT", "KO"
-    ]
+    ] 
+    # symbols = [
+    #     "MSFT", "AAPL", "GOOGL", "AMZN", "TSLA", "META", "NVDA", "ADBE", "INTC", "NFLX",
+    #     "CSCO", "AMD", "BA", "IBM", "DIS", "PYPL", "MA", "V", "WMT", "KO", "TCS.NS", "SBI.NS", "RR.L", "HSBA.L",
+    #     "VOD.L"
+    # ]
+
+    symbols_env = os.getenv('STOCK_SYMBOLS', '').split(',')
+
+    if symbols_env:
+        symbols = symbols + symbols_env
+
     
     historical_data = fetch_historical_data(symbols)
     historical_df = process_historical_data(historical_data)

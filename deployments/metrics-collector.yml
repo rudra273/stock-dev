@@ -1,3 +1,35 @@
+# apiVersion: apps/v1
+# kind: Deployment
+# metadata:
+#   name: metrics-collector
+#   namespace: stock-app
+# spec:
+#   replicas: 1
+#   selector:
+#     matchLabels:
+#       app: metrics-collector
+#   template:
+#     metadata:
+#       labels:
+#         app: metrics-collector
+#     spec:
+#       containers:
+#         - name: metrics-collector
+#           image: rudra273/metrics-collector:latest
+#           ports:
+#             - containerPort: 7878
+# ---
+# apiVersion: v1
+# kind: Service
+# metadata:
+#   name: metrics-collector
+#   namespace: stock-app
+# spec:
+#   ports:
+#     - port: 7878
+#   selector:
+#     app: metrics-collector
+
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -25,7 +57,10 @@ metadata:
   name: metrics-collector
   namespace: stock-app
 spec:
+  type: NodePort
   ports:
     - port: 7878
+      targetPort: 7878
+      nodePort: 30004  # Optional: specify a nodePort or let Kubernetes assign one
   selector:
     app: metrics-collector

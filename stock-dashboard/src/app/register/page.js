@@ -45,7 +45,7 @@ export default function RegisterPage() {
       return;
     }
 
-    const lurl = 'http://localhost:8002'
+    const lurl = 'http://192.168.49.2:30001'
     const durl = process.env.NEXT_PUBLIC_API_URL
 
     const res = await fetch(`${lurl}/users/register/`, {

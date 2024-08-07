@@ -1,3 +1,50 @@
+# apiVersion: apps/v1
+# kind: Deployment
+# metadata:
+#   name: backend
+#   namespace: stock-app
+# spec:
+#   replicas: 1
+#   selector:
+#     matchLabels:
+#       app: backend
+#   template:
+#     metadata:
+#       labels:
+#         app: backend
+#     spec:
+#       containers:
+#         - name: backend
+#           image: rudra273/stock-backend:0.1
+#           env:
+#             - name: STOCK_SYMBOLS
+#               value: TCS.NS,ITC.NS,COALINDIA.NS,RR.L,HSBA.L
+#             - name: DEBUG
+#               value: "1"
+#             - name: DB_HOST
+#               value: "postgres"
+#             - name: DB_PORT
+#               value: "5432"
+#             - name: DB_NAME
+#               value: "mydb"
+#             - name: DB_USER
+#               value: "rudra"
+#             - name: DB_PASSWORD
+#               value: "1234"
+#           ports:
+#             - containerPort: 8000
+# ---
+# apiVersion: v1
+# kind: Service
+# metadata:
+#   name: backend
+#   namespace: stock-app
+# spec:
+#   ports:
+#     - port: 8000
+#   selector:
+#     app: backend
+
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -15,8 +62,10 @@ spec:
     spec:
       containers:
         - name: backend
-          image: rudra273/stock-backend:latest
+          image: rudra273/stock-backend:0.3
           env:
+            - name: STOCK_SYMBOLS
+              value: TCS.NS,ITC.NS,COALINDIA.NS,RR.L,HSBA.L
             - name: DEBUG
               value: "1"
             - name: DB_HOST
@@ -38,8 +87,10 @@ metadata:
   name: backend
   namespace: stock-app
 spec:
+  type: NodePort
   ports:
     - port: 8000
+      targetPort: 8000
+      nodePort: 30001  # Optional: specify a nodePort or let Kubernetes assign one
   selector:
     app: backend
-
