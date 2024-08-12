@@ -2,7 +2,7 @@ apiVersion: v1
 kind: ConfigMap
 metadata:
   name: prometheus-config
-  namespace: stock-app
+  namespace: stock-app-ci
 data:
   prometheus.yml: |
     global:

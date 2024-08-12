@@ -11,11 +11,27 @@ const isAuthenticated = () => {
 };
 
 // Function to handle logout
+// const handleLogout = () => {
+//   // Remove token or perform any necessary logout actions
+//   localStorage.removeItem('access_token');
+//   window.location.href = '/login'; // Redirect to login page
+// };
+
+
 const handleLogout = () => {
-  // Remove token or perform any necessary logout actions
+  // Remove token from localStorage
   localStorage.removeItem('access_token');
-  window.location.href = '/login'; // Redirect to login page
+  localStorage.removeItem('refresh_token'); 
+
+  // Clear any other relevant application state (if applicable)
+
+  // Redirect to login page
+  window.location.href = '/login';
+
+  // Optionally, you can force reload to ensure the new page state is applied
+  window.location.reload();
 };
+
 
 const NavBar = () => {
   const [authStatus, setAuthStatus] = useState(false);

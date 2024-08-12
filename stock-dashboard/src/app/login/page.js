@@ -17,10 +17,11 @@ export default function LoginPage() {
     e.preventDefault();
     setError(null);
 
-    const lurl = 'http://192.168.49.2:30001'
+    const lurl = 'http://localhost:8002'
     const durl = process.env.NEXT_PUBLIC_API_URL
 
-    const res = await fetch(`${lurl}/users/login/`, { 
+
+    const res = await fetch(`${durl}/users/login/`, { 
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -29,12 +30,14 @@ export default function LoginPage() {
     });
 
     if (res.ok) {
-      const { access } = await res.json();
+      // const { access } = await res.json();
+      const { access, refresh } = await res.json();
       localStorage.setItem('access_token', access); // Store token in localStorage
+      localStorage.setItem('refresh_token', refresh); 
       router.push('/dashboard');
     } else {
       const data = await res.json();
-      setError(data.detail || 'An error occurred');
+      setError(data.detail || 'Incorrect username or password');
     }
   };
 

@@ -155,17 +155,39 @@ The 'Stock Dashboards' project integrates Next.js, Django, PostgreSQL, and compr
 
 # ---
 
-stock-frontend:0.7
-
-docker build -t rudra273/stock-frontend:0.7 .
-
-docker push rudra273/stock-frontend:0.7
-
+<!-- for clusterip without refress token- -->0.5
+rudra273/stock-backend:0.2
+docker build -t rudra273/stock-backend:0.2 .
+docker push rudra273/stock-backend:0.2
 
 
-rudra273/stock-backend:0.3
-docker build -t rudra273/stock-backend:0.3 .
-docker push rudra273/stock-backend:0.3
+stock-frontend:0.3
+
+docker build -t rudra273/stock-frontend:test3 .
+
+docker push rudra273/stock-frontend:test3
+
+
+<!-- cluster ip with token refress.. -->
+
+rudra273/stock-backend:1.1
+docker build -t rudra273/stock-backend:1.1 .
+docker push rudra273/stock-backend:1.1
+
+
+stock-frontend:1.1
+
+docker build -t rudra273/stock-frontend:1.1 .
+
+docker push rudra273/stock-frontend:1.1
+
+rudra273/metrics-collector
+docker build -t rudra273/metrics-collector:1.1 .
+docker push rudra273/metrics-collector:1.1
+
+# to acces db
+kubectl exec -it db-5d9d8f5cb5-lk87w -n stock-app -- /bin/bash
+psql -U rudra -d mydb;
 
 
 ## Build and Push Docker Images

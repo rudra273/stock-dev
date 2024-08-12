@@ -17,7 +17,9 @@ if __name__ == "__main__":
     symbols = [
         "MSFT", "AAPL", "GOOGL", "AMZN", "TSLA", "META", "NVDA", "ADBE", "INTC", "NFLX",
         "CSCO", "AMD", "BA", "IBM", "DIS", "PYPL", "MA", "V", "WMT", "KO"
-    ] 
+    ]    
+    # country = "USA"
+    # ingest_stock_data(symbols, country) 
 
     # symbols = [
     #     "MSFT", "AAPL", "GOOGL", "AMZN", "TSLA", "META", "NVDA", "ADBE", "INTC", "NFLX",
